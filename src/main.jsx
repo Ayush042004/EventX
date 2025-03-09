@@ -8,6 +8,8 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
+import Hackathon from './components/Hackathons.jsx'
+import About from './components/About.jsx'
 
 
 const router = createBrowserRouter([
@@ -33,6 +35,18 @@ const router = createBrowserRouter([
           <AuthLayout authentication={false}>
           <Signup/>
           </AuthLayout>
+        )
+      },
+      {
+        path: "/hackathons",
+        element: (
+          <Hackathon/>
+        )
+      },
+      {
+        path: "/about",
+        element: (
+          <About/>
         )
       }
     ]
