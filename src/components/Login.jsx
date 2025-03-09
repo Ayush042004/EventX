@@ -20,14 +20,18 @@ function Login() {
     setError("");
 
     try {
-      // Simulate an API call
+
       const loginResponse = await authService.logIn(data)
-      if(!loginResponse.ok)setError(loginResponse.statusText);
-      const userData = await authService.getCurrentUser()
-      if(userData){
-        dispatch(login(userData));
-        navigate("/dashboard");
-    }
+      console.log(loginResponse);
+      
+      if(loginResponse && loginResponse.user){
+        console.log("we here");
+        
+        dispatch(login({userData:loginResponse.user}))
+        console.log("Dispatched");
+      }
+      navigate("/browse-events")
+      
     } catch (err) {
       setError("Invalid email or password");
     } finally {
