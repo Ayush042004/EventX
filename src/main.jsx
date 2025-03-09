@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
 import Hackathon from './components/Hackathons.jsx'
 import About from './components/About.jsx'
+import Hackathons from './components/Hackathons.jsx'
 
 
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element:(
-        <AuthLayout authentication={false}>
+        <AuthLayout authentication={true}>
           <Home/>
         </AuthLayout>)
       },
@@ -51,9 +52,9 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/hackathons",
+        path: "/browse-events",
         element: (
-          <About/>
+          <Hackathons/>
         )
       }
     ]
