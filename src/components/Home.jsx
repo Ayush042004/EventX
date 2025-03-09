@@ -11,8 +11,51 @@ import {
   Coins,
   AlignCenterVertical as Certificate
 } from 'lucide-react';
+import { Marquee } from './magicui/marquee';
+
+//for testimonials
+const Card = ({ name, Role, text }) => (
+  <div className="w-80 bg-green-100 rounded-lg shadow-lg p-6 text-center mx-4">
+    <p className="text-lg italic text-gray-700">"{text}"</p>
+    <h3 className="mt-4 text-green-700 font-semibold">{name}</h3>
+    <span className="text-sm text-gray-500">{Role}</span>
+  </div>
+);
 
 const Home = () => {
+
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "Hackathon Organizer",
+      text: "This platform made managing our hackathon a breeze! The AI-based resume shortlisting saved us hours of work, and the blockchain-powered prize distribution ensured fairness and transparency."
+    },
+    {
+      name: "James Carter",
+      role: "Participant",
+      text: "Loved the experience! The seamless Web3 login and NFT certificates were a game-changer. The voting system also made our hackathon more engaging."
+    },
+    {
+      name: "Emily Roberts",
+      role: "Tech Conference Host",
+      text: "Setting up and managing our event was incredibly smooth. The ability to create private and public events helped us organize our sessions efficiently."
+    },
+    {
+      name: "Daniel Lee",
+      role: "Blockchain Developer",
+      text: "The smart contract integration for prize distribution was flawless! The platform ensures complete transparency and removes manual handling errors."
+    },
+    {
+      name: "Olivia Martinez",
+      role: "Startup Founder",
+      text: "I participated in a pitch competition on this platform, and the experience was fantastic! The AI-powered shortlisting ensured that the best ideas got recognized."
+    },
+    {
+      name: "Michael Brown",
+      role: "Event Sponsor",
+      text: "Sponsoring events on this platform was an excellent decision. The engagement tools and seamless participation process helped maximize our brand visibility."
+    }
+  ]
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -35,6 +78,7 @@ const Home = () => {
   };
 
   return (
+    <>
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative bg-white dark:bg-black py-20 pt-32 transition-colors">
@@ -46,6 +90,7 @@ const Home = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight glitch-effect text-gray-900 dark:text-white dark:neon-text" data-text="EVENTX">
+                
                 EVENTX
               </h1>
               <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-yellow-400">
@@ -186,7 +231,44 @@ const Home = () => {
         viewport={{ once: true }}
         className="py-20 bg-white dark:bg-black text-gray-900 dark:text-white transition-colors"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+
+
+      
+   {/* Testimonials Section */}
+<section className="py-20 bg-gray-50 dark:bg-black text-gray-900 dark:text-white transition-colors">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="text-center mb-16"
+    >
+      <h2 className="text-4xl font-bold mb-4 dark:neon-text">What People Say About EVENTX</h2>
+      <p className="text-xl text-yellow-600 dark:text-yellow-400">
+        Trusted by Hackathon Organizers, Developers, and Innovators
+      </p>
+    </motion.div>
+    {/* Marquee Testimonials */}
+    <Marquee className="mt-8" pauseOnHover={true} reverse={false} repeat={2}>
+      {testimonials.map((testimonial, index) => (
+        <motion.div
+          key={index}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+          className="relative bg-white dark:bg-black border border-yellow-400 neon-border p-6 rounded-xl shadow-lg text-center mx-4 max-w-xs"
+        >
+          <p className="text-lg italic text-gray-700 dark:text-gray-300">"{testimonial.text}"</p>
+          <h3 className="mt-4 text-yellow-600 dark:text-yellow-400 font-semibold">{testimonial.name}</h3>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</span>
+        </motion.div>
+      ))}
+    </Marquee>
+  </div>
+</section>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-6">
           <h2 className="text-4xl font-bold mb-8 dark:neon-text">Ready to Start Your Journey?</h2>
           <Link
             to="/host"
@@ -198,6 +280,10 @@ const Home = () => {
         </div>
       </motion.section>
     </div>
+  
+
+    </>
+    
   );
 };
 
