@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { login as authLogin } from "../store/authSlice";
 import { Input} from "./index";
 import { Mail } from "lucide-react";
+import { Meteors } from "./magicui/meteors";
 
 function Login() {
   const { register, handleSubmit } = useForm();
@@ -50,9 +51,14 @@ function Login() {
       </div>
 
       {/* Right Section with Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <div className="backdrop-blur-sm bg-white/80 rounded-2xl p-8 shadow-[0_0_15px_rgba(252,211,77,0.5)] border border-yellow-300">
+      <div className="flex-1 flex items-center justify-center p-8 relative bg-white">
+        {/* Meteors Effect inside only the white section */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <Meteors number={50} className="opacity-40" />
+        </div>
+
+        <div className="w-full max-w-md relative z-10">
+          <div className="backdrop-blur-sm bg-white/90 rounded-2xl p-8 shadow-lg border border-yellow-300">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
               <p className="mt-2 text-gray-600">Welcome back!</p>
@@ -88,13 +94,12 @@ function Login() {
               </div>
 
               <button
-  type="submit"
-  disabled={loading}
-  className="w-full bg-yellow-400 text-white py-3 px-4 rounded-lg font-medium hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
->
-  {loading ? "Please wait..." : "Sign In"}
-</button>
-
+                type="submit"
+                disabled={loading}
+                className="w-full bg-yellow-400 text-white py-3 px-4 rounded-lg font-medium hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+              >
+                {loading ? "Please wait..." : "Sign In"}
+              </button>
 
               <p className="text-center text-sm text-gray-600 mt-4">
                 Don't have an account?{" "}
