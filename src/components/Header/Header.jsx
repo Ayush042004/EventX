@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Globe, Menu, X } from 'lucide-react';
+import LogoutBtn from './LogoutBtn';
+import { useSelector } from 'react-redux';
 //import { ThemeToggle } from './ThemeToggle';
 
 const Header = () => {
+  const authStatus = useSelector((state)=>state.auth?.status)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -47,18 +50,29 @@ const Header = () => {
             <button className="p-2 text-yellow-400 hover:text-yellow-300">
               <Globe className="h-5 w-5" />
             </button>
-            <Link
-              to="/signin"
-              className=" hidden md:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300"
-            >
-              Sign in
-            </Link>
-            <Link
-              to="/signup"
-              className="hidden md:inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-yellow-400 rounded-lg hover:bg-yellow-300 neon-border"
-            >
-              Sign up
-            </Link>
+            {!authStatus && (
+              <>
+                <Link
+                  to="/login"
+                  className="hidden md:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="hidden md:inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-yellow-400 rounded-lg hover:bg-yellow-300 neon-border"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
+            {
+              authStatus && (<>
+              <LogoutBtn/>
+              </>)
+            }
+
+            
 
             <div className="flex md:hidden">
               <button

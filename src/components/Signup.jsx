@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { login as authLogin } from "../store/authSlice";
+import { login } from "../store/authSlice";
 import { Input } from "./index";
 import { Mail, User } from "lucide-react";
 import { Meteors } from "./magicui/meteors";
+import authService from "../backend/auth.js";
 
 function Signup() {
   const navigate = useNavigate();
@@ -15,17 +16,17 @@ function Signup() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    
     setLoading(true);
     setError("");
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      dispatch(authLogin({ userData: { name: data.name, email: data.email } }));
-      navigate("/dashboard");
+      const response = await authService.createAccount(data)
+      if(response.status==200)navigate("/login");
     } catch (err) {
       setError("Signup failed, please try again.");
+      console.log(err);
+      
     } finally {
       setLoading(false);
     }

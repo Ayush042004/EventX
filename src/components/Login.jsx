@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { login as authLogin } from "../store/authSlice";
+import { login  } from "../store/authSlice";
 import { Input} from "./index";
 import { Mail } from "lucide-react";
 import { Meteors } from "./magicui/meteors";
+import authService from "../backend/auth";
 
 function Login() {
   const { register, handleSubmit } = useForm();
@@ -20,10 +21,13 @@ function Login() {
 
     try {
       // Simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      dispatch(authLogin({ userData: { email: data.email } }));
-      navigate("/dashboard");
+      const loginResponse = await authService.logIn(data)
+      if(!loginResponse.ok)setError(loginResponse.statusText);
+      const userData = await authService.getCurrentUser()
+      if(userData){
+        dispatch(login(userData));
+        navigate("/dashboard");
+    }
     } catch (err) {
       setError("Invalid email or password");
     } finally {
