@@ -68,7 +68,7 @@ function Signup() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
-                  <User className="absolute inset-y-0 left-3 w-5 h-5 text-gray-400" />
+                  <User className="absolute inset-y-0 left-3 mt-2.5 w-5 h-5 text-gray-400" />
                   <Input type="text" placeholder="Enter your full name" className="pl-10" {...register("name", { required: "Full Name is required" })} />
                 </div>
               </div>
@@ -76,7 +76,7 @@ function Signup() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute inset-y-0 left-3 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute inset-y-0 mt-2.5 left-3 w-5 h-5 text-gray-400" />
                   <Input type="email" placeholder="Enter your email" className="pl-10" {...register("email", { required: "Email is required" })} />
                 </div>
               </div>
