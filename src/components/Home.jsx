@@ -12,6 +12,7 @@ import {
   AlignCenterVertical as Certificate
 } from 'lucide-react';
 import { Marquee } from './magicui/marquee';
+import {Particles} from './magicui/particles'
 
 //for testimonials
 const Card = ({ name, Role, text }) => (
@@ -80,67 +81,74 @@ const Home = () => {
   return (
     <>
     <div className="flex flex-col">
+
+    
       {/* Hero Section */}
-      <section className="relative bg-white dark:bg-black py-20 pt-32 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight glitch-effect text-gray-900 dark:text-white dark:neon-text" data-text="EVENTX">
-                
-                EVENTX
-              </h1>
-              <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-yellow-400">
-               MANAGE
-              </h2>
-              <h2 className="text-4xl md:text-6xl font-bold mb-12 tracking-tight text-yellow-500">
-                FROM 0 TO 1
-              </h2>
-            </motion.div>
+      <section className="relative bg-white dark:bg-black py-20 pt-32 transition-colors overflow-hidden">
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12"
-            >
-              <div className="bg-white dark:bg-black border-2 border-yellow-400 rounded-xl p-6 relative overflow-hidden neon-border">
-                <div className="absolute top-0 right-0 w-4 h-4 bg-yellow-400"></div>
-                <Trophy className="h-8 w-8 mb-4 text-yellow-400" />
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">EDU Chain Learning Track</h3>
-                <p className="text-yellow-600 dark:text-yellow-400">Build on the 1st blockchain built for Education</p>
-              </div>
-              <div className="bg-white dark:bg-black border-2 border-yellow-400 rounded-xl p-6 relative overflow-hidden neon-border">
-                <div className="absolute top-0 right-0 w-4 h-4 bg-yellow-400"></div>
-                <Users className="h-8 w-8 mb-4 text-yellow-400" />
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Learn and build alongside</h3>
-                <p className="text-yellow-600 dark:text-yellow-400">83,990 developers</p>
-              </div>
-            </motion.div>
+  {/* Particles Background */}
+  <div className="absolute inset-0">
+    <Particles
+      quantity={100}
+      staticity={30}
+      ease={50}
+      size={2}
+      refresh={false}
+      color={"0A0A08"} // Adjust to your desired glow effect
+      vx={0.5}
+      vy={0.5}
+    />
+  </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex justify-center"
-            >
-              <Link
-                to="/get-started"
-                className="inline-flex items-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full hover:bg-yellow-300 transition-all transform hover:scale-105 neon-border"
-              >
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight glitch-effect text-gray-900 dark:text-white dark:neon-text" data-text="EVENTX">
+        EVENTX
+      </h1>
+      <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-yellow-400">
+        MANAGE
+      </h2>
+      <h2 className="text-4xl md:text-6xl font-bold mb-12 tracking-tight text-yellow-500">
+        FROM 0 TO 1
+      </h2>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay: 0.4 }}
+      className="flex justify-center"
+    >
+      <Link
+        to="/get-started"
+        className="inline-flex items-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full hover:bg-yellow-300 transition-all transform hover:scale-105 neon-border"
+      >
+        Get Started
+        <ArrowRight className="ml-2 h-5 w-5" />
+      </Link>
+    </motion.div>
+  </div>
+</section>
 
       {/* Key Features Section */}
-      <section className="py-20 bg-gray-50 dark:bg-black text-gray-900 dark:text-white transition-colors">
+      <section className="py-20  dark:bg-black text-gray-900 dark:text-white transition-colors relative">
+      <div className="absolute inset-0">
+    <Particles
+      quantity={100}
+      staticity={30}
+      ease={50}
+      size={2}
+      refresh={false}
+      color={"0A0A08"} // Adjust to your desired glow effect
+      vx={0.5}
+      vy={0.5}
+    />
+  </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -205,7 +213,7 @@ const Home = () => {
                 variants={itemVariants}
                 className="relative group h-full"
               >
-               {/* Background effect */}
+               
       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"></div>
 
 {/* Main card */}
@@ -236,7 +244,20 @@ const Home = () => {
 
       
    {/* Testimonials Section */}
-<section className="py-20 bg-gray-50 dark:bg-black text-gray-900 dark:text-white transition-colors">
+<section className="py-20  dark:bg-black text-gray-900 dark:text-white transition-colors relative">
+<div className="absolute inset-0">
+    <Particles
+      quantity={100}
+      staticity={30}
+      ease={50}
+      size={2}
+      refresh={false}
+      color={"0A0A08"} // Adjust to your desired glow effect
+      vx={0.5}
+      vy={0.5}
+    />
+  </div>
+
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
