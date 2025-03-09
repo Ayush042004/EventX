@@ -122,52 +122,56 @@ const Home = () => {
                 icon: Trophy,
                 title: 'Event Hosting',
                 description: 'Host hackathons, tech events, and competitions with ease',
-                color: 'bg-yellow-400'
+               
               },
               {
                 icon: FileCheck,
                 title: 'Smart Shortlisting',
                 description: 'AI-powered resume screening for participant selection',
-                color: 'bg-yellow-400'
+                
               },
               {
                 icon: Vote,
                 title: 'Decentralized Voting',
                 description: 'Transparent voting system powered by smart contracts',
-                color: 'bg-yellow-400'
+                
               },
               {
                 icon: Coins,
                 title: 'Automated Rewards',
                 description: 'Smart contract-based prize distribution to winners',
-                color: 'bg-yellow-400'
+                
               },
               {
                 icon: Certificate,
                 title: 'NFT Certificates',
                 description: 'Mint and distribute verifiable NFT certificates',
-                color: 'bg-yellow-400'
+                
               },
               {
                 icon: Award,
                 title: 'Achievement Tracking',
                 description: 'Blockchain-verified participation and achievements',
-                color: 'bg-yellow-400'
+                
               }
             ].map((feature, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="relative group"
+                className="relative group h-full"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-xl transform rotate-1 group-hover:rotate-2 transition-transform"></div>
-                <div className="relative bg-white dark:bg-black p-8 rounded-xl transform transition-transform group-hover:-translate-y-2 border border-yellow-400 neon-border">
-                  <div className={`p-3 rounded-lg inline-block mb-4 ${feature.color} neon-border`}>
-                    <feature.icon className="h-6 w-6 text-black dark:text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{feature.title}</h3>
-                  <p className="text-yellow-600 dark:text-yellow-400">{feature.description}</p>
-                </div>
+               {/* Background effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"></div>
+
+{/* Main card */}
+<div className="relative bg-white dark:bg-black p-8 rounded-xl transform transition-transform group-hover:-translate-y-2 border border-yellow-400 neon-border h-full flex flex-col justify-between">
+  <div className="p-3 rounded-lg inline-block mb-4 bg-yellow-400 neon-border">
+    <feature.icon className="h-6 w-6 text-black dark:text-white" />
+  </div>
+  <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{feature.title}</h3>
+  <p className="text-yellow-600 dark:text-yellow-400">{feature.description}</p>
+  
+</div>
               </motion.div>
             ))}
           </motion.div>
