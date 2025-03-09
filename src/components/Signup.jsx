@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { login as authLogin } from "../store/authSlice";
 import { Input } from "./index";
 import { Mail, User } from "lucide-react";
+import { Meteors } from "./magicui/meteors";
 
 function Signup() {
   const navigate = useNavigate();
@@ -50,7 +51,9 @@ function Signup() {
       </div>
 
       {/* Right Section with Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 bg-white">
+
+        <Meteors size={100} className="absolute inset-0 z-0" />
         <div className="w-full max-w-md">
           <div className="backdrop-blur-sm bg-white/80 rounded-2xl p-8 shadow-[0_0_15px_rgba(252,211,77,0.5)] border border-yellow-300">
             <div className="text-center">
@@ -68,7 +71,7 @@ function Signup() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
-                  <User className="absolute inset-y-0 left-3 w-5 h-5 text-gray-400" />
+                  <User className="absolute inset-y-0 left-3 mt-2.5 w-5 h-5 text-gray-400" />
                   <Input type="text" placeholder="Enter your full name" className="pl-10" {...register("name", { required: "Full Name is required" })} />
                 </div>
               </div>
@@ -76,7 +79,7 @@ function Signup() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute inset-y-0 left-3 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute inset-y-0 mt-2.5 left-3 w-5 h-5 text-gray-400" />
                   <Input type="email" placeholder="Enter your email" className="pl-10" {...register("email", { required: "Email is required" })} />
                 </div>
               </div>
