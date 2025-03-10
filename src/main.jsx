@@ -11,6 +11,7 @@ import { AuthLayout } from './components/index.js'
 import Hackathon from './components/Hackathons.jsx'
 import About from './components/About.jsx'
 import Hackathons from './components/Hackathons.jsx'
+import Organize from './components/Organize.jsx'
 
 
 const router = createBrowserRouter([
@@ -39,10 +40,10 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/dashboard",
+        path: "/organize",
         element:(
         <AuthLayout authentication={true}>
-          <Home/>
+          <Organize/>
         </AuthLayout>)
       },
       {

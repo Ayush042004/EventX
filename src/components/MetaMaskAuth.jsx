@@ -76,7 +76,7 @@ const MetaMaskAuth = () => {
                 onClick={connectWallet} 
                 className="p-2 m-2 border border-gray-700 hover:bg-indigo-800 hover:text-white rounded"
             >
-               connected
+               connect
             </button>
             <ToastContainer />
             </>

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Wallet } from "lucide-react";
 import { useSelector } from "react-redux";
-import classNames from "classnames";
+import clsx from "clsx";
 
 const AvatarDropdown = () => {
   const user = useSelector((state) => state.auth?.user);
