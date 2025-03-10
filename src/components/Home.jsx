@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Marquee } from './magicui/marquee';
 import {Particles} from './magicui/particles'
+import { FlipText } from './magicui/flip-text';
 
 //for testimonials
 const Card = ({ name, Role, text }) => (
@@ -84,9 +85,7 @@ const Home = () => {
 
     
       {/* Hero Section */}
-      <section className="relative bg-white dark:bg-black py-20 pt-32 transition-colors overflow-hidden">
-
-  {/* Particles Background */}
+  <section className="relative bg-white dark:bg-black py-20 pt-32 transition-colors overflow-hidden">
   <div className="absolute inset-0">
     <Particles
       quantity={100}
@@ -109,12 +108,22 @@ const Home = () => {
       <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight glitch-effect text-gray-900 dark:text-white dark:neon-text" data-text="EVENTX">
         EVENTX
       </h1>
-      <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-yellow-400">
+      <FlipText
+        duration={0.5}
+        delayMultiple={0.08}
+        className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-yellow-400"
+      >
         MANAGE
-      </h2>
-      <h2 className="text-4xl md:text-6xl font-bold mb-12 tracking-tight text-yellow-500">
+      </FlipText>
+
+      <FlipText
+        duration={0.5}
+        delayMultiple={0.08}
+        className="text-4xl md:text-6xl font-bold mb-12 tracking-tight text-yellow-500"
+      >
         FROM 0 TO 1
-      </h2>
+      </FlipText>
+
     </motion.div>
 
     <motion.div
