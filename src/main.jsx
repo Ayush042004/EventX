@@ -8,10 +8,9 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
-import Hackathon from './components/Hackathons.jsx'
 import About from './components/About.jsx'
-import Hackathons from './components/Hackathons.jsx'
 import Organize from './components/Organize.jsx'
+import Event from "./components/Event.jsx"
 
 
 const router = createBrowserRouter([
@@ -55,7 +54,7 @@ const router = createBrowserRouter([
       {
         path: "/browse-events",
         element: (
-          <Hackathons/>
+          <Event/>
         )
       }
     ]

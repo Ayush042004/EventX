@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload } from "lucide-react";
-import { Particles } from "./magicui/particles";
+import { Particles } from "./magicui/particles"; // Ensure this path is correct
 
 const Organize = () => {
   const {
