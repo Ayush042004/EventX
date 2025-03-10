@@ -9,7 +9,10 @@ import Signup from './pages/Signup.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
 import About from './components/About.jsx'
-import Events from './components/Events.jsx'
+import Event from "./components/Event.jsx"
+import OrganizeEventForm from './components/Organize.jsx'
+import EventPage from './components/EventPage.jsx'
+import AddRound from './components/AddRound.jsx'
 
 
 const router = createBrowserRouter([
@@ -38,10 +41,10 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/dashboard",
+        path: "/organize",
         element:(
         <AuthLayout authentication={true}>
-          <Home/>
+          <OrganizeEventForm/>
         </AuthLayout>)
       },
       {
@@ -53,7 +56,21 @@ const router = createBrowserRouter([
       {
         path: "/browse-events",
         element: (
-          <Events/>
+          <Event/>
+        )
+      },
+      {
+        path:"/hackathon/:id",
+        element:(
+          <EventPage/>
+        )
+      },
+      {
+        path:"/:id/rounds/add",
+        element:(
+          <AuthLayout authentication={true}>
+          <AddRound/>
+          </AuthLayout>
         )
       }
     ]

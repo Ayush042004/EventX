@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Globe, Menu, X } from 'lucide-react';
+import { Trophy,Menu, X } from 'lucide-react';
 import LogoutBtn from './LogoutBtn';
 import { useSelector } from 'react-redux';
 import AvatarDropdown from '../AvatarDropdown';
@@ -33,7 +33,7 @@ const Header = () => {
                  Browse Events
               </Link>
               <Link to="/organize" className="eb text-gray-900 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300 px-3 py-2 text-sm font-medium">
-                Organize
+                organize
               </Link>
               <Link to="/resources" className="eb text-gray-900 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300 px-3 py-2 text-sm font-medium">
                 Resources
