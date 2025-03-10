@@ -17,22 +17,22 @@ const Organize = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gray-50 flex items-center justify-center overflow-hidden">
+    <div className="relative bg-gray-100 flex items-center justify-center overflow-hidden min-h-screen px-4">
       {/* Particles Background */}
-      <div className="absolute inset-0 -z-10">
+      <div className="fixed w-full h-full inset-0">
         <Particles
           quantity={100}
           staticity={30}
           ease={50}
           size={2}
           refresh={false}
-          color={"#0A0A08"} // Adjust to your desired glow effect
+          color={"#0A0A08"}
           vx={0.5}
           vy={0.5}
         />
       </div>
 
-      <div className="relative z-10 max-w-4xl w-full mx-auto py-8 px-4 sm:px-6 lg:px-8 bg-white shadow-lg rounded-lg">
+      <div className="relative max-w-4xl w-full mx-auto py-7 px-6 sm:px-8 lg:px-10 bg-white shadow-lg rounded-lg border border-yellow-400">
         {/* Header */}
         <div className="flex items-center mb-8">
           <button
@@ -65,7 +65,15 @@ const Organize = () => {
             </div>
 
             {/* Other Form Fields */}
-            {["id", "description", "finalDate", "prizePool", "maxTeamSize", "roundTotal", "roundAt"].map((field) => (
+            {[
+              "id",
+              "description",
+              "finalDate",
+              "prizePool",
+              "maxTeamSize",
+              "roundTotal",
+              "roundAt",
+            ].map((field) => (
               <div key={field}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {field.replace(/([A-Z])/g, " $1")}
@@ -73,7 +81,7 @@ const Organize = () => {
                 <input
                   type={field === "finalDate" ? "date" : "text"}
                   {...register(field, { required: true })}
-                  className="mt-1 block w-full border-gray-300 rounded-md"
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 />
                 {errors[field] && (
                   <p className="mt-2 text-sm text-red-600">
@@ -88,7 +96,7 @@ const Organize = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Is Vote Active?</label>
               <select
                 {...register("isVoteActive", { required: true })}
-                className="mt-1 block w-full border-gray-300 rounded-md"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               >
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -100,7 +108,7 @@ const Organize = () => {
 
             {/* Submit Button */}
             <div className="flex justify-end">
-              <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+              <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 shadow-md">
                 Submit
               </button>
             </div>

@@ -16,42 +16,116 @@ const Event = () => {
   ];
 
   const competitions = [
-    { id: '1', title: 'Lawyerr.ai Case Study Challenge', organizer: 'Techhalo', logo: 'https://img.icons8.com/color/96/law.png', type: 'Online', pricing: 'Free', views: 353, applicants: 6, daysLeft: 6, link: '#', bgColor: 'bg-purple-600' },
-    { id: '2', title: 'InnoSpark 2025: National Level Ideathon', organizer: 'Saraswati College', logo: 'https://img.icons8.com/color/96/idea.png', type: 'Offline', pricing: 'Free', views: 245, applicants: 6, daysLeft: 11, link: '#', bgColor: 'bg-pink-600' },
+    { id: '1',
+        title: 'Lawyerr.ai Case Study Challenge: Revolutionizing Legal Tech',
+        organizer: 'Techhalo',
+        logo: 'https://img.icons8.com/color/96/law.png',
+        bannerImage: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800',
+        type: 'Online',
+        pricing: 'Free',
+        views: 353,
+        applicants: 6,
+        daysLeft: 6,
+        link: '#',
+        bgColor: 'bg-purple-600' },
+
+    { id: '2',
+    title: 'InnoSpark 2025: National Level Ideathon',
+    organizer: 'Saraswati College of Engineering, Kharghar',
+    logo: 'https://img.icons8.com/color/96/idea.png',
+    bannerImage: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800',
+    type: 'Offline',
+    pricing: 'Free',
+    views: 245,
+    applicants: 6,
+    daysLeft: 11,
+    link: '#',
+    bgColor: 'bg-pink-600' },
+
+    {
+        id: '3',
+    title: 'Techno Chill: Heat up Your Knowledge',
+    organizer: 'National Engineering College, Kovilpatti',
+    logo: 'https://img.icons8.com/color/96/technology.png',
+    bannerImage: 'https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?auto=format&fit=crop&q=80&w=800',
+    type: 'Offline',
+    pricing: 'Paid',
+    views: 965,
+    applicants: 12,
+    daysLeft: 4,
+    link: '#',
+    bgColor: 'bg-blue-600'
+
+    }
   ];
 
   const CompetitionCard = ({ competition }) => (
-    <div className={`relative overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 ${competition.bgColor}`}>
-      <div className="relative p-6 space-y-6">
-        <div className="flex gap-2">
-          <span className="px-3 py-1 text-sm bg-white/90 rounded-full">{competition.type}</span>
-          <span className="px-3 py-1 text-sm bg-white/90 rounded-full">{competition.pricing}</span>
-        </div>
-        <div className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="h-12 w-12 rounded-lg bg-white/90 p-2 flex items-center justify-center">
-              <img src={competition.logo} alt={competition.title} className="w-full h-full object-contain" />
-            </div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1 line-clamp-2">{competition.title}</h3>
-            <p className="text-white/80 text-sm">{competition.organizer}</p>
-          </div>
-          <div className="flex items-center gap-4 text-white/90 text-sm">
-            <div className="flex items-center gap-1">
-              <Eye size={16} /> <span>{competition.views.toLocaleString()} Views</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Users size={16} /> <span>{competition.applicants} Applied</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Clock size={16} /> <span>{competition.daysLeft} days left</span>
-            </div>
+    <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white">
+      {/* Banner Image */}
+      <div className="relative h-48 overflow-hidden">
+        <img 
+          src={competition.bannerImage} 
+          alt={competition.title}
+          className="w-full h-full object-cover"
+        />
+        <div className={`absolute inset-0 ${competition.bgColor} opacity-60`}></div>
+        
+        {/* Logo */}
+        <div className="absolute -bottom-6 left-6">
+          <div className="h-12 w-12 rounded-lg bg-white shadow-lg p-2 flex items-center justify-center">
+            <img 
+              src={competition.logo} 
+              alt={competition.title}
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
-        <a href={competition.link} className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20">
+
+        {/* Arrow Link */}
+        <a 
+          href={competition.link}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+        >
           <ArrowUpRight className="w-4 h-4 text-white" />
         </a>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 pt-8 space-y-4">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+            {competition.title}
+          </h3>
+          <p className="text-gray-600 text-sm">
+            {competition.organizer}
+          </p>
+        </div>
+
+        {/* Tags */}
+        <div className="flex gap-2">
+          <span className={`px-3 py-1 text-sm ${competition.bgColor} text-white rounded-full`}>
+            {competition.type}
+          </span>
+          <span className={`px-3 py-1 text-sm ${competition.bgColor} text-white rounded-full`}>
+            {competition.pricing}
+          </span>
+        </div>
+
+        {/* Stats */}
+        <div className="flex items-center gap-4 text-gray-600 text-sm pt-2">
+          <div className="flex items-center gap-1">
+            <Eye size={16} />
+            <span>{competition.views.toLocaleString()} Views</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Users size={16} />
+            <span>{competition.applicants} Applied</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Clock size={16} />
+            <span>{competition.daysLeft} days left</span>
+          </div>
+        </div>
       </div>
     </div>
   );
