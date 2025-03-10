@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-function Hackathons() {
+function Events() {
   const authState = useSelector(state => state.auth);
   console.log("Redux State:", authState);
   return (
@@ -9,4 +9,4 @@ function Hackathons() {
   )
 }
 
-export default Hackathons
+export default Events

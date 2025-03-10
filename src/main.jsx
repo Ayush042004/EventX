@@ -8,9 +8,8 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
-import Hackathon from './components/Hackathons.jsx'
 import About from './components/About.jsx'
-import Hackathons from './components/Hackathons.jsx'
+import Events from './components/Events.jsx'
 
 
 const router = createBrowserRouter([
@@ -54,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: "/browse-events",
         element: (
-          <Hackathons/>
+          <Events/>
         )
       }
     ]
@@ -69,3 +68,4 @@ createRoot(document.getElementById('root')).render(
   <RouterProvider router={router}/>
   </Provider>
 )
+
