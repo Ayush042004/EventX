@@ -9,7 +9,7 @@ const AvatarDropdown = () => {
   const userData = useSelector(state=>state.auth?.userData)
   
   const userStatus = useSelector((state) => state.auth?.status);
-  const avatarSrc = userData?.avatar;
+  const avatarSrc = userData?.avatar  || "https://i.sstatic.net/frlIf.png";
   console.log("Avatar Data Type:", typeof userData?.avatar);
 
   
