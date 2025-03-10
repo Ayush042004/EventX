@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Globe, Menu, X } from 'lucide-react';
 import LogoutBtn from './LogoutBtn';
 import { useSelector } from 'react-redux';
+import AvatarDropdown from '../AvatarDropdown';
 //import { ThemeToggle } from './ThemeToggle';
 
 const Header = () => {
   const authStatus = useSelector((state)=>state.auth?.status)
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -48,7 +50,6 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             
             <button className="p-2 text-yellow-400 hover:text-yellow-300">
-              <Globe className="h-5 w-5" />
             </button>
             {!authStatus && (
               <>
@@ -68,6 +69,7 @@ const Header = () => {
             )}
             {
               authStatus && (<>
+              <AvatarDropdown/>
               <LogoutBtn/>
               </>)
             }
