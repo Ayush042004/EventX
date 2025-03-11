@@ -9,8 +9,12 @@ import Signup from './pages/Signup.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from './components/index.js'
 import About from './components/About.jsx'
-import Organize from './components/Organize.jsx'
 import Event from "./components/Event.jsx"
+import OrganizeEventForm from './components/Organize.jsx'
+import EventPage from './components/EventPage.jsx'
+import AddRound from './components/AddRound.jsx'
+import TeamDashboard from './components/TeamDashboard.jsx'
+import Participants from './components/Participants.jsx'
 
 
 const router = createBrowserRouter([
@@ -42,7 +46,7 @@ const router = createBrowserRouter([
         path: "/organize",
         element:(
         <AuthLayout authentication={true}>
-          <Organize/>
+          <OrganizeEventForm/>
         </AuthLayout>)
       },
       {
@@ -55,6 +59,36 @@ const router = createBrowserRouter([
         path: "/browse-events",
         element: (
           <Event/>
+        )
+      },
+      {
+        path:"/hackathon/:id",
+        element:(
+          <EventPage/>
+        )
+      },
+      {
+        path:"/:id/rounds/add",
+        element:(
+          <AuthLayout authentication={true}>
+          <AddRound/>
+          </AuthLayout>
+        )
+      },
+      {
+        path: "/:id/participants",
+        element:(
+          <AuthLayout authentication={true}>
+            <TeamDashboard/>
+          </AuthLayout>
+        )
+      },
+      {
+        path: "/team/:teamId",
+        element:(
+          <AuthLayout authentication={true}>
+            <Participants/>
+          </AuthLayout>
         )
       }
     ]
@@ -69,3 +103,4 @@ createRoot(document.getElementById('root')).render(
   <RouterProvider router={router}/>
   </Provider>
 )
+
