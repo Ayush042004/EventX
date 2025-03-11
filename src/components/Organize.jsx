@@ -4,7 +4,7 @@ import { ArrowLeft, Upload } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { createNewHackathon } from '../store/contractSlice';
 import { useNavigate } from "react-router-dom";
-import organizeService from '../backend/organize';
+import organizeService from '../backend/organize.js';
 import { Particles } from "./magicui/particles";
 import { toast } from 'react-hot-toast';
 
