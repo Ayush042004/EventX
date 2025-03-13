@@ -120,28 +120,67 @@ export const createNewHackathon = createAsyncThunk(
   }
 );
 
-// 5. Register a new team for a hackathon
 export const registerNewTeam = createAsyncThunk(
   'contract/registerTeam',
   async ({ eventId, teamName }, { rejectWithValue }) => {
     try {
-      // Send transaction to register a team
+      console.log("Registering team on blockchain:", { eventId, teamName });
+
+      // 1️⃣ Ensure contract is initialized
+      const initResult = await contractUtils.initializeContract();
+      if (!initResult.success) {
+        throw new Error("Contract initialization failed: " + initResult.error);
+      }
+
+      // 2️⃣ Call contract function correctly
       const tx = await contractUtils.registerTeam(eventId, teamName);
-      
-      // Wait for transaction to be mined
+      console.log("Transaction submitted:", tx.hash);
+
+      // 3️⃣ Wait for transaction confirmation
       const receipt = await tx.wait();
-      
-      // Find the event that was emitted and get the new team ID
-      const event = receipt.events.find(e => e.event === 'TeamRegistered');
-      const teamId = event.args.teamId.toNumber();
-      
-      // Return the new team info
-      return { teamId, eventId, teamName };
+      console.log("Transaction mined:", receipt);
+      return {eventId, teamName };
     } catch (error) {
+      console.error("Error registering team:", error);
       return rejectWithValue(error.message || 'Failed to register team');
     }
   }
 );
+
+export const joinTeam = createAsyncThunk(
+  'contract/joinTeam',
+  async ({ eventId, teamId }, { rejectWithValue }) => {
+    try {
+      console.log("Attempting to join team with:", { eventId, teamId });
+
+      // Ensure contract is initialized
+      const initResult = await contractUtils.initializeContract();
+      if (!initResult.success) {
+        console.error("Contract initialization failed:", initResult.error);
+        throw new Error("Contract initialization failed: " + initResult.error);
+      }
+
+      // Check if joinTeam function exists
+      if (typeof contractUtils.joinTeam !== "function") {
+        throw new Error("joinTeam function does not exist in contractUtils");
+      }
+
+      // Call the contract function
+      const tx = await contractUtils.joinTeam(eventId, teamId);
+      console.log("Transaction submitted:", tx.hash);
+
+      // Wait for transaction confirmation
+      const receipt = await tx.wait();
+      console.log("Transaction mined:", receipt);
+
+      return { eventId, teamId };
+    } catch (error) {
+      console.error("Error joining team:", error);
+      return rejectWithValue(error.message || "Failed to join team. Please check contract conditions.");
+    }
+  }
+);
+
 
 // ====== REDUX SLICE ======
 // This manages the state for our blockchain interactions
@@ -223,6 +262,20 @@ const contractSlice = createSlice({
         state.loading = false;
         state.error = action.payload || 'Failed to fetch teams';
       })
+      // ==== join team States ====
+                // Add to your extraReducers in contractSlice.js
+      .addCase(joinTeam.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(joinTeam.fulfilled, (state, action) => {
+        state.loading = false;
+        // You might want to update state based on the team joined
+      })
+      .addCase(joinTeam.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to join team';
+      })
       
       // ==== Create Hackathon States ====
       .addCase(createNewHackathon.pending, (state) => {
@@ -239,15 +292,22 @@ const contractSlice = createSlice({
         state.error = action.payload || 'Failed to create hackathon';
       })
       
-      // ==== Register Team States ====
-      .addCase(registerNewTeam.pending, (state) => {
+       // ==== Register Team States ====
+       .addCase(registerNewTeam.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(registerNewTeam.fulfilled, (state, action) => {
         state.loading = false;
-        // Note: You might want to refresh the teams list after registration
-        // This would typically be done by dispatching fetchEventTeams again
+        
+        //Update state with the newly registered team
+        state.teams.push({
+          teamId: action.payload.teamId,
+          eventId: action.payload.eventId,
+          teamName: action.payload.teamName,
+        });
+
+        console.log("Redux state updated with new team:", action.payload);
       })
       .addCase(registerNewTeam.rejected, (state, action) => {
         state.loading = false;

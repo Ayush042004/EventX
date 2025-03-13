@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Users, UserPlus, UserPlus2, X, Search } from 'lucide-react';
 import participantService from '../backend/participant.js';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+// import { keccak256, toUtf8Bytes, toBigInt } from "ethers";
+import * as contractUtils from '../contracts/contractUtils.js';
+import { joinTeam, registerNewTeam } from '../store/contractSlice.js';
 export default function ParticipantDashboard() {
     const {id} = useParams();
     
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch=useDispatch();
     const [mockTeams, setMockTeams] = useState([]);
     const [filteredTeams, setFilteredTeams] = useState([]);
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -14,6 +18,7 @@ export default function ParticipantDashboard() {
     const [teamName, setTeamName] = useState('');
     const [teamCode, setTeamCode] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [teamid,setTeamid]=useState(0);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -36,53 +41,87 @@ export default function ParticipantDashboard() {
     
         setFilteredTeams(filtered);
     }, [searchQuery, mockTeams]);
-
+    const convertToUint256 = (mongoId) => {
+        return BigInt("0x" + mongoId).toString(); // Convert MongoDB ID to uint256
+    };
     const handleCreateTeam = async (e) => {
         e.preventDefault();
         // Handle team creation logic here
         try {
-            // Uncomment and implement when you have the API ready
-            // const newTeam = await participantService.createTeam({ name: teamName });
-            // setMockTeams([...mockTeams, newTeam]);
-            console.log('Creating team:', teamName);
+            //Blockchain Call
+            // Ensure contract is initialized before calling dispatch
+            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            if (accounts.length === 0) {
+                alert("No wallet connected! Please connect to MetaMask.");
+                return;
+            }
+            await contractUtils.initializeContract();
+            const response = await dispatch(registerNewTeam({ eventId: 1, teamName })).unwrap();
+
+            console.log("Blockchain response:", response);
+
+            // alert(`Team created successfully! ID: ${response.teamId}`);
+            setShowCreateModal(false);
+            setTeamName('');
         } catch (error) {
-            console.error('Error creating team:', error);
+            console.error("Error creating team:", error);
+            alert("Failed to create team: " + (error.message || "Unknown error"));
         }
-        setShowCreateModal(false);
-        setTeamName('');
+        // setShowCreateModal(false);
+        // setTeamName('');
     };
-    
     const handleJoinTeam = async (e) => {
         e.preventDefault();
         // Handle team joining logic here
         try {
-            const response = await participantService.joinTeam(teamCode);
-    
-            if (response.success) {
-                console.log('Joined Team:', response);
-    
-                // Redirect user to their team page
-                navigate(`/team/${response}`);
-            } else {
-                // Handle different error cases based on the response message
-                if (response.message === "You are already a member of this team" || 
-                    response.message === "You are already part of a team for this hackathon") {
-                    
-                    // If user is already in a team, redirect them to that team's page
-                    console.log("User already in a team, redirecting...");
-                    navigate(`/team/${response.teamId}`);
-                }
-                if(response.message === "Team is already at maximum capacity")navigate("")
-                
-                // Show alert for other errors
-                alert(response.message);
+            console.log("helloJi");
+
+            //Blockchain call
+
+            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            if (accounts.length === 0) {
+                alert("No wallet connected! Please connect to MetaMask.");
+                return;
             }
+            await contractUtils.initializeContract();
+            const blockchainresponse=await dispatch(joinTeam({eventId:1,teamId:1})).unwrap();
+            console.log("join team blockchaiin repsonse:",blockchainresponse);
+
+            // const response = await participantService.joinTeam(teamCode);
+    
+            // if (response.success) {
+            //     console.log('Joined Team:', response);
+            //     setTeamid(response?.teamid);
+    
+            //     // Redirect user to their team page
+            //     navigate(`/team/${response}`);
+            // } else {
+            //     // Handle different error cases based on the response message
+            //     if (response.message === "You are already a member of this team" || 
+            //         response.message === "You are already part of a team for this hackathon") {
+                    
+            //         // If user is already in a team, redirect them to that team's page
+            //         console.log("User already in a team, redirecting...");
+            //         navigate(`/team/${response.teamId}`);
+            //     }
+            //     if(response.message === "Team is already at maximum capacity")navigate("")
+                
+            //     // Show alert for other errors
+            //     alert(response.message);
+            // }
         } catch (error) {
             console.error('Error joining team:', error);
-            alert(error.response?.data?.message || 'Failed to join team. Please try again.');
+            // alert(error.response?.data?.message || 'Failed to join team. Please try again.');
+        
+        // Handle specific error types
+        if (error.code === 'CALL_EXCEPTION') {
+            alert("Contract call failed. This could be due to invalid parameters or contract restrictions.");
+        } else {
+            alert("Failed to join team: " + (error.message || "Unknown error"));
         }
-        setShowJoinModal(false);
-        setTeamCode('');
+        }
+        // setShowJoinModal(false);
+        // setTeamCode('');
     };
     
     

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ArrowLeft, Upload } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createNewHackathon } from '../store/contractSlice';
-import { ethers } from 'ethers';
 import { useNavigate } from "react-router-dom";
-import organizeService from '../backend/organize';
+import organizeService from '../backend/organize.js';
 import { Particles } from "./magicui/particles";
-
+import { toast } from 'react-hot-toast';
 
 const OrganizeEventForm = () => {
   const navigate = useNavigate();
@@ -21,21 +20,40 @@ const OrganizeEventForm = () => {
 
 
   const onSubmit = async (data) => {
+    const loadingToast = toast.loading("Creating hackathon...");
     try {
-      // dispatch(createNewHackathon({
-      //   name: data.name,
-      //   description: data.description,
-      //   prizePool: ethers.utils.parseEther(data.prizePool.toString()),
-      //   firstPrizePercent: Number(data.firstPrizePercent),
-      //   secondPrizePercent: Number(data.secondPrizePercent),
-      //   thirdPrizePercent: Number(data.thirdPrizePercent),
-      //   maxTeamSize: Number(data.maxTeamSize),
-      //   maxTeams: 999999,
-      //   startDate: Math.floor(Date.now() / 1000),
-      //   endDate: Math.floor(new Date(data.endDate).getTime() / 1000),
-      //   roundTotal: Number(data.roundTotal),
-      //   roundAt: data.roundAt,
-      // }));
+      console.log("Form data received:", data);
+      
+            // Convert date inputs
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+            let startDate = Math.floor(new Date(`${data.startDate}T00:00:00Z`).getTime() / 1000);
+            let endDate = Math.floor(new Date(`${data.endDate}T00:00:00Z`).getTime() / 1000);
+      
+            if (!startDate || startDate <= currentTimestamp) {
+              startDate = currentTimestamp + 300; // Default to 5 minutes in the future
+            }
+            if (!endDate || endDate <= startDate) {
+              throw new Error("End date must be after start date.");
+            }
+      
+            // Dispatch Redux action to create the hackathon
+            const result = await dispatch(createNewHackathon({
+              name: data.name,
+              description: data.description,
+              prizePool: data.prizePool.toString(),
+              firstPrizePercent: Number(data.firstPrizePercent),
+              secondPrizePercent: Number(data.secondPrizePercent),
+              thirdPrizePercent: Number(data.thirdPrizePercent),
+              maxTeamSize: Number(data.maxTeamSize),
+              maxTeams: 999999,
+              startDate,
+              endDate,
+              roundTotal: Number(data.roundTotal),
+              roundAt: data.roundAt,
+            })).unwrap();
+      
+            console.log("Hackathon created:", result);
+            toast.success("Hackathon created successfully!");
             console.log(bannerFile);
             
             const formData = new FormData();
@@ -49,7 +67,7 @@ const OrganizeEventForm = () => {
             formData.append("banner", bannerFile);
 
             for (let pair of formData.entries()) {
-              console.log(pair[0] + ": " + pair[1]); // ✅ Correct way to log FormData
+              console.log(pair[0] + ": " + pair[1]);
           }
           
             
@@ -60,8 +78,11 @@ const OrganizeEventForm = () => {
         navigate("/")
     }
     } catch (err) {
-      console.error("Error submitting form:", err.message);
-    }
+          console.error("Error creating hackathon:", err);
+          toast.error(`Error: ${err.message || "Something went wrong"}`);
+        } finally {
+          toast.dismiss(loadingToast);
+        }
   };
 
   return (
@@ -80,7 +101,7 @@ const OrganizeEventForm = () => {
        </div>
       <div className=" relative max-w-4xl mx-auto bg-white/90 p-8 rounded-2xl  backdrop-blur-md border border-gray-200  shadow-md">
         <div className="flex items-center mb-8">
-          <button className="flex items-center text-gray-600 hover:text-gray-900">
+          <button className="flex items-center text-gray-600 hover:text-gray-900" onClick={()=>navigate(-1)}>
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back
           </button>
@@ -111,16 +132,23 @@ const OrganizeEventForm = () => {
           <input type="number" placeholder="Prize Pool" {...register('prizePool', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
           {errors.prizePool && <p className="text-red-500 text-sm">Prize pool is required</p>}
 
-          <input type="number" placeholder="First Prize (%)" {...register('firstPrizePercent', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
-          <input type="number" placeholder="Second Prize (%)" {...register('secondPrizePercent', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
-          <input type="number" placeholder="Third Prize (%)" {...register('thirdPrizePercent', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
-
+         {/* Prize Percentages */}
+         {["First", "Second", "Third"].map((prize, index) => (
+            <div key={index}>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{prize} Prize (%)</label>
+              <input type="number" placeholder={`${prize} Prize (%)`} {...register(`${prize.toLowerCase()}PrizePercent`, { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
+            </div>
+          ))}
           <input type="number" placeholder="Max Team Size" {...register('maxTeamSize', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
           {errors.maxTeamSize && <p className="text-red-500 text-sm">Max team size is required</p>}
 
-          <input type="date" {...register('endDate', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
-          {errors.endDate && <p className="text-red-500 text-sm">End date is required</p>}
-
+          {["Start", "End"].map((type, index) => (
+            <div key={index}>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{type} Date</label>
+              <input type="date" {...register(`${type.toLowerCase()}Date`, { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
+              {errors[`${type.toLowerCase()}Date`] && <p className="text-red-500 text-sm">{type} date is required</p>}
+            </div>
+          ))}
           <input type="number" placeholder="Total Rounds" {...register('roundTotal', { required: true })} className="block w-full border-gray-300 rounded-md p-2" />
           {errors.roundTotal && <p className="text-red-500 text-sm">Total rounds are required</p>}
 
@@ -130,8 +158,8 @@ const OrganizeEventForm = () => {
                  {...register("isVoteActive", { required: true })}
                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                >
-                 <option value="true">true</option>
-                 <option value="false">false</option>
+                 <option value="true">True</option>
+                 <option value="false">False</option>
                </select>
                {errors.isVoteActive && (
                  <p className="mt-2 text-sm text-red-600">Vote status is required</p>
