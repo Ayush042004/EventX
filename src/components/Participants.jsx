@@ -1,8 +1,9 @@
-import { Users, Copy, Check, User } from 'lucide-react';
+import { Users, Copy, Check, User, Upload } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import participantService from '../backend/participant.js';
+import submissionService from '../backend/submissions.js';
 
 export default function TeamInvite() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,7 +14,7 @@ export default function TeamInvite() {
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
 
-  const { teamId } = useParams();
+  const { teamId,hackathonId } = useParams();
   console.log(teamId);
   
   
@@ -81,17 +82,26 @@ export default function TeamInvite() {
     setRetryCount(prevCount => prevCount + 1);
   };
 
-  const onSubmit = async (formData) => {
+const onSubmit = async (formData) => {
+    if (!bannerFile) {
+      alert("Please upload a banner file.");
+      return;
+    }
+    
     if (bannerFile) {
-      const dataToSubmit = new FormData();
-      // Add form fields to FormData
-      Object.keys(formData).forEach(key => {
-        dataToSubmit.append(key, formData[key]);
-      });
-      dataToSubmit.append("banner", bannerFile);
+      console.log("Here");
       
-      // Submit logic here
-      console.log("Submitting form with banner:", dataToSubmit);
+      const dataToSubmit = new FormData();
+
+      console.log("Selected File:", bannerFile);
+      dataToSubmit.append("Link",formData.gitLink)
+      dataToSubmit.append("banner", bannerFile);
+
+      for (let pair of dataToSubmit.entries()) {
+        console.log(pair[0], pair[1]); // Should print: "banner", File object
+      }
+      
+      submissionService.createSubmission(hackathonId,teamId,formData)
     }
   };
 
@@ -140,7 +150,7 @@ export default function TeamInvite() {
   const displayData = teamData || mockTeamData;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 mt-20">
+    <div className="max-w-8xl mx-auto p-6 mt-20 flex justify-center flex-wrap">
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
           <p className="text-red-600 text-sm">{error}</p>
@@ -153,7 +163,7 @@ export default function TeamInvite() {
         </div>
       )}
       
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden min-w-60 mr-10 ml-10">
         <div className="p-6">
           {/* Team Header */}
           <div className="flex items-center justify-between mb-6">
@@ -215,6 +225,50 @@ export default function TeamInvite() {
               <li>Click "Join" to become a team member</li>
             </ol>
           </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden min-w-60">
+        <div className="p-6">
+          {/* Submission Section */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Submission
+              </h1>
+              <div className="flex flex-col space-y-1">
+                <div className="flex items-center text-sm text-gray-500">
+
+
+
+                <form onSubmit={handleSubmit(onSubmit)} name="banner" className="space-y-6">
+
+               <div>
+               <label className="block text-sm font-medium text-gray-700 mb-2">Resume Upload</label>
+               <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                 <div className="space-y-1 text-center">
+                   <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                   <label className="cursor-pointer text-blue-600 font-medium hover:text-blue-500">
+                     {bannerFile?<span>{bannerFile.name}</span>:<span>Click here to upload</span>}
+                     <input onChange={handleFileChange} type="file" className="sr-only"/>
+                   </label>
+                   <p className="text-xs text-gray-500">Max size of image cannot exceed 1MB!</p>
+                 </div>
+               </div>
+              {errors.banner && <p className="mt-2 text-sm text-red-600">Banner is required</p>}
+             </div>
+
+             <input type="text" placeholder="GitHub Link" {...register('gitLink', { required: true })} className="block w-full border-gray-300 rounded-md p-2" required="true" />
+             
+             <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 w-full">
+              Submit
+              </button>
+             </form>
+                </div>
+                {/* Member List */}
+              </div>
+        </div>
+        </div>
         </div>
       </div>
     </div>

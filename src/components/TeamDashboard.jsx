@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Users, UserPlus, UserPlus2, X, Search } from 'lucide-react';
 import participantService from '../backend/participant.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 export default function ParticipantDashboard() {
     const {id} = useParams();
@@ -70,7 +70,7 @@ export default function ParticipantDashboard() {
                     
                     // If user is already in a team, redirect them to that team's page
                     console.log("User already in a team, redirecting...");
-                    navigate(`/team/${response.teamId}`);
+                    navigate(`/team/${id}/${response.teamId}`);
                 }
                 if(response.message === "Team is already at maximum capacity")navigate("")
                 
@@ -102,15 +102,18 @@ export default function ParticipantDashboard() {
                         className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
+                <Link
+                        to={`/${id}/create-team`}>
                 <div className="flex gap-3">
                     <button
-                        onClick={() => setShowCreateModal(true)}
                         className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         <UserPlus className="h-4 w-4 mr-2" />
                         Create Team
+                        
+                        
                     </button>
-                </div>
+                </div></Link>
             </div>
 
             {/* Team Grid */}

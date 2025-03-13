@@ -32,7 +32,7 @@ function EventPage() {
     const fetchData = async()=>{
       try {
         const response = await authService.getCurrentUser();
-        setUser(response.user); // ✅ Update state with user data
+        setUser(response.user); 
       } catch (error) {
         console.error("❌ Error fetching user:", error);
       }
@@ -140,23 +140,42 @@ function EventPage() {
           </p>
 
           <div className="flex flex-wrap gap-6 items-center">
-            {isOwner?<Link to={`/${hackathon._id}/rounds/add`}><motion.button
+            {isOwner?
+            <div>
+              <Link to={`/${hackathon._id}/rounds/add`}>
+              <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group px-8 py-4 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-bold rounded-xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 flex items-center gap-3"
-            >
+              >
               <span>Start Round</span>
               <ChevronRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
-            </motion.button></Link>
+              </motion.button>
+              </Link>
+              
+            </div>
+            
             :
+            <div className='flex'>
             <Link to={`/${hackathon._id}/participants`}><motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group px-8 py-4 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-bold rounded-xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 flex items-center gap-3"
+              className="group px-8 py-4 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-bold rounded-xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 flex items-center gap-3 mr-6"
             >
               <span>Register Now</span>
               <ChevronRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
-            </motion.button></Link>}
+            </motion.button></Link>
+            <Link to={`/submissions/${hackathon._id}`}><motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group px-8 py-4 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-bold rounded-xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 flex items-center gap-3"
+              >
+              <span>Submissions</span>
+              <ChevronRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+              </Link>
+            
+            </div>}
             
 
             <div className="flex items-center gap-8 text-amber-100">
