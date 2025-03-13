@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import {PulsatingButton} from "./magicui/pulsating-button"
+
 import {
   ArrowRight,
   Trophy,
@@ -132,13 +134,17 @@ const Home = () => {
       transition={{ duration: 0.6, delay: 0.4 }}
       className="flex justify-center"
     >
+      
       <Link
         to="/get-started"
         className="inline-flex items-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full hover:bg-yellow-300 transition-all transform hover:scale-105 neon-border"
       >
+        
         Get Started
+      
         <ArrowRight className="ml-2 h-5 w-5" />
       </Link>
+      
     </motion.div>
   </div>
 </section>
