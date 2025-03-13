@@ -71,7 +71,7 @@ const OrganizeEventForm = () => {
            quantity={100}
            staticity={30}
            ease={50}
-          size={2}
+           size={2}
            refresh={false}
            color={"#0A0A08"}
            vx={0.5}

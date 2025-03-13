@@ -219,4 +219,4 @@ export default function TeamInvite() {
       </div>
     </div>
   );
-}
+}   
