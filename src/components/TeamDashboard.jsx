@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Users, UserPlus, UserPlus2, X, Search } from 'lucide-react';
 import participantService from '../backend/participant.js';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-// import { keccak256, toUtf8Bytes, toBigInt } from "ethers";
-import * as contractUtils from '../contracts/contractUtils.js';
-import { joinTeam, registerNewTeam } from '../store/contractSlice.js';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+
+// import { useNavigate, useParams } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// // import { keccak256, toUtf8Bytes, toBigInt } from "ethers";
+// import * as contractUtils from '../contracts/contractUtils.js';
+// import { joinTeam, registerNewTeam } from '../store/contractSlice.js';
 export default function ParticipantDashboard() {
     const {id} = useParams();
     
@@ -74,14 +76,34 @@ export default function ParticipantDashboard() {
         e.preventDefault();
         // Handle team joining logic here
         try {
-            console.log("helloJi");
+            const response = await participantService.joinTeam(teamCode);
+    
+            if (response.success) {
+                console.log('Joined Team:', response);
+    
+                // Redirect user to their team page
+                navigate(`/team/${response}`);
+            } else {
+                // Handle different error cases based on the response message
+                if (response.message === "You are already a member of this team" || 
+                    response.message === "You are already part of a team for this hackathon") {
+                    
+                    // If user is already in a team, redirect them to that team's page
+                    console.log("User already in a team, redirecting...");
+                    navigate(`/team/${id}/${response.teamId}`);
+                }
+                if(response.message === "Team is already at maximum capacity")navigate("")
+                
+                // Show alert for other errors
+                alert(response.message);
+            // console.log("helloJi");
 
-            //Blockchain call
+            // //Blockchain call
 
-            const accounts = await window.ethereum.request({ method: "eth_accounts" });
-            if (accounts.length === 0) {
-                alert("No wallet connected! Please connect to MetaMask.");
-                return;
+            // const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            // if (accounts.length === 0) {
+            //     alert("No wallet connected! Please connect to MetaMask.");
+            //     return;
             }
             await contractUtils.initializeContract();
             const blockchainresponse=await dispatch(joinTeam({eventId:1,teamId:1})).unwrap();
@@ -141,15 +163,18 @@ export default function ParticipantDashboard() {
                         className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
+                <Link
+                        to={`/${id}/create-team`}>
                 <div className="flex gap-3">
                     <button
-                        onClick={() => setShowCreateModal(true)}
                         className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         <UserPlus className="h-4 w-4 mr-2" />
                         Create Team
+                        
+                        
                     </button>
-                </div>
+                </div></Link>
             </div>
 
             {/* Team Grid */}

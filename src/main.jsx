@@ -15,6 +15,8 @@ import EventPage from './components/EventPage.jsx'
 import AddRound from './components/AddRound.jsx'
 import TeamDashboard from './components/TeamDashboard.jsx'
 import Participants from './components/Participants.jsx'
+import CreateTeam from './components/CreateTeam.jsx'
+import SubmissionList from './components/SubmissionList.jsx'
 
 
 const router = createBrowserRouter([
@@ -84,10 +86,26 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/team/:teamId",
+        path: "/team/:hackathonId/:teamId",
         element:(
           <AuthLayout authentication={true}>
             <Participants/>
+          </AuthLayout>
+        )
+      },
+      {
+        path:"/:hackathonId/create-team",
+        element:(
+          <AuthLayout authentication = {true}>
+            <CreateTeam/>
+          </AuthLayout>
+        )
+      },
+      {
+        path:"/submissions/:hackathonId",
+        element:(
+          <AuthLayout authentication={true}>
+            <SubmissionList/>
           </AuthLayout>
         )
       }
