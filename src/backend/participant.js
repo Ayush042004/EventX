@@ -1,7 +1,7 @@
 export class ParticipantService{
     async getParticipants(HackathonId){
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/participant/allteam/${HackathonId}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/participant/allteam/${HackathonId}`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -21,7 +21,7 @@ export class ParticipantService{
 
     async joinTeam(id){
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/participant/join-team/${id}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/participant/join-team/${id}`,
                 {
                     method: "POST",
                     credentials: "include",
@@ -42,7 +42,7 @@ export class ParticipantService{
     async getTeam(id){
         
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/participant/team-details/${id}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/participant/team-details/${id}`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -66,7 +66,7 @@ export class ParticipantService{
         
         
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/participant/create-team/${id}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/participant/create-team/${id}`,
                 {
                     method: "POST",
                     credentials: "include",

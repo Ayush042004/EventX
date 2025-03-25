@@ -1,6 +1,6 @@
 export class OrganizeService{
     async createHackathon(data){
-        const response = await fetch("http://localhost:3000/api/v1/hackathon/organizer/create",{
+        const response = await fetch("https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/create",{
             method: "POST",
                 credentials: "include",
             body: data,
@@ -13,7 +13,7 @@ export class OrganizeService{
     }
 
     async getHackathon(id){
-        const response = await fetch(`http://localhost:3000/api/v1/hackathon/organizer/${id}`, {
+        const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/${id}`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -33,7 +33,7 @@ export class OrganizeService{
 
     async addRound(id,data){
         //params mei name daalna hoga mp ek hackathon ko get krne ke baad ek button lagainge add round ka toh hojaiga
-        const response = await fetch(`http://localhost:3000/api/v1/hackathon/organizer/${id}/rounds/add`, {
+        const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/${id}/rounds/add`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -49,7 +49,7 @@ export class OrganizeService{
     }
 
     async getRounds (id){
-        const response = await fetch(`http://localhost:3000/api/v1/hackathon/organizer/${id}/rounds`,{
+        const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/${id}/rounds`,{
             method: "GET",
             credentials: "include",
             headers: {
@@ -62,7 +62,7 @@ export class OrganizeService{
     }
 
     async showSubmissions(name){
-        const response = await fetch(`http://localhost:3000/api/v1/hackathon/organizer/${name}/submissions`, {
+        const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/${name}/submissions`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -81,7 +81,7 @@ export class OrganizeService{
     }
 
     async announceWinners(name,data){
-        const response = await fetch(`http://localhost:3000/api/v1/hackathon/organizer/${name}/announce-winners`, {
+        const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/${name}/announce-winners`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -97,7 +97,7 @@ export class OrganizeService{
     }
 
     async getAllHackathons(){
-        const response = await fetch('http://localhost:3000/api/v1/hackathon/organizer/browse-events',
+        const response = await fetch('https://eventx-backend-u79p.onrender.com/api/v1/hackathon/organizer/browse-events',
             {
                 method: "GET",
                 credentials: "include",

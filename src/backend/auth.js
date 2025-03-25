@@ -1,7 +1,7 @@
 export class AuthService{
     async createAccount(data){
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/register", {
+            const response = await fetch("https://eventx-backend-u79p.onrender.com/api/v1/user/register", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -22,7 +22,7 @@ export class AuthService{
 
     async logIn(data){
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/login", {
+            const response = await fetch("https://eventx-backend-u79p.onrender.com/api/v1/user/login", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -43,7 +43,7 @@ export class AuthService{
 
     async getCurrentUser(){
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/current-user", {
+            const response = await fetch("https://eventx-backend-u79p.onrender.com/api/v1/user/current-user", {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -67,7 +67,7 @@ export class AuthService{
 
     async logout() {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/logout", {
+            const response = await fetch("https://eventx-backend-u79p.onrender.com/api/v1/user/logout", {
                 method: "POST", // or "GET" depending on your backend
                 credentials: "include", // Ensures cookies are sent and deleted properly
                 headers: {

@@ -1,7 +1,7 @@
 export class SubmissionService{
     async createSubmission(hackathonId,teamId,data){
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/submissions/create-submission/${hackathonId}/${teamId}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/submissions/create-submission/${hackathonId}/${teamId}`,
                 {
                     method: "POST",
                     credentials: "include",
@@ -22,7 +22,7 @@ export class SubmissionService{
 
     async getSubmission(hackathonId){
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/submissions/fetch-submissions/${hackathonId}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/submissions/fetch-submissions/${hackathonId}`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -42,7 +42,7 @@ export class SubmissionService{
 
     async deleteSubmission(hackathonId){
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/hackathon/submissions/delete-submission/${hackathonId}`,
+            const response = await fetch(`https://eventx-backend-u79p.onrender.com/api/v1/hackathon/submissions/delete-submission/${hackathonId}`,
                 {
                     method: "POST",
                     credentials: "include",
